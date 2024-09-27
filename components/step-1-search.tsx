@@ -15,9 +15,7 @@ export default function Step_1Search({ onSelectResult }: Step1SearchProps) {
   const { chercherImmatriculation } = useSIV();
   const [licensePlate, setLicensePlate] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [selectedResult, setSelectedResult] = useState<SearchResult | null>(
-    null
-  );
+  const [, setSelectedResult] = useState<SearchResult | null>(null);
 
   // useEffect(() => {
   //   onSelectResult(selectedResult);
