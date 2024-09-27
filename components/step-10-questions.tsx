@@ -19,7 +19,7 @@ export function Step10Questions({ onUpdateAnswers }: Step10QuestionsProps) {
   return (
     <div className="space-y-4">
       <h2 className="text-xl font-bold text-center">
-        Disposez-vous d'un bonus/malus ?
+        Disposez-vous d&apos;un bonus/malus ?
       </h2>
       <div className="space-y-2">
         <ButtonSelectComponent

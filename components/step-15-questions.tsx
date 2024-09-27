@@ -1,20 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
 } from "@/components/ui/card";
-import { Avatar, AvatarImage } from "./ui/avatar";
-import { Badge } from "./ui/badge";
+import { formatDateDDMMYYYY } from "@/lib/utils";
+import { UserRound } from "lucide-react";
 import { usageVehiculeOptions } from "./step-5-questions";
 import { garageVehiculeOptions } from "./step-7-questions";
-import { UserRound } from "lucide-react";
-import { formatDateDDMMYYYY } from "@/lib/utils";
+import { Avatar, AvatarImage } from "./ui/avatar";
 
 // const exampleData = {
 //   color: "immatriculation",

@@ -3,7 +3,6 @@
 import useSIV, { SearchResult } from "@/app/hooks/useSIV";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { ChangeEvent, useState } from "react";
 import SearchResultCard from "./SearchResultCard";
 
@@ -57,7 +56,9 @@ export default function Step2Questions({ onSelectResult }: Step2SearchProps) {
 
   return (
     <div className="space-y-4 flex flex-col justify-center text-center">
-      <h2 className="text-xl font-bold text-center">N° d'immatriculation</h2>
+      <h2 className="text-xl font-bold text-center">
+        N° d&apos;immatriculation
+      </h2>
       <Input
         id="license-plate"
         type="text"
