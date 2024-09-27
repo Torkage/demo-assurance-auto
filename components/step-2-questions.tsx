@@ -73,9 +73,7 @@ export default function Step2Questions({ onSelectResult }: Step2SearchProps) {
       </Button>{" "}
       {searchResults.length > 0 && (
         <SearchResultCard
-          onSelect={(result: SearchResult) =>
-            handleSelectResult(searchResults[0])
-          }
+          onSelect={() => handleSelectResult(searchResults[0])}
           result={searchResults[0]}
         />
       )}

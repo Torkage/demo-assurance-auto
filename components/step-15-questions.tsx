@@ -75,10 +75,7 @@ interface Step15QuestionsProps {
   onUpdateAnswers: (answers: Record<string, string>) => void;
 }
 
-export function Step15Questions({
-  answers,
-  onUpdateAnswers,
-}: Step15QuestionsProps) {
+export function Step15Questions({ answers }: Step15QuestionsProps) {
   const exampleData = answers;
   return (
     <div className="space-y-4">

@@ -12,8 +12,8 @@ export default function StepPaymentSuccess() {
       </CardHeader>
       <CardContent>
         <p className="text-muted-foreground">
-          Merci pour votre paiement. Votre police d'assurance a été activée avec
-          succès.
+          Merci pour votre paiement. Votre police d&apos;assurance a été activée
+          avec succès.
         </p>
         <p className="mt-4 text-sm text-muted-foreground">
           Vous recevrez bientôt un email de confirmation avec tous les détails
