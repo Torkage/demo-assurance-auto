@@ -23,7 +23,13 @@ export default function ButtonSelectComponent({
   className,
 }: ButtonSelectProps) {
   return (
-    <div className={cn("flex flex-wrap gap-2", className)} role="radiogroup">
+    <div
+      className={cn(
+        "grid grid-cols-1 sm:grid-cols-2 gap-2 justify-center",
+        className
+      )}
+      role="radiogroup"
+    >
       {options.map((option) => (
         <Button
           key={option.value}
@@ -31,7 +37,8 @@ export default function ButtonSelectComponent({
           onClick={() => onChange(option.value)}
           aria-checked={value === option.value}
           role="radio"
-          className="flex-grow sm:flex-grow-0"
+          className="w-full max-h-[auto] p-4 min-h-[80px]"
+          style={{ textWrap: "wrap" }}
         >
           {option.label}
         </Button>

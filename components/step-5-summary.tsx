@@ -1,10 +1,11 @@
 "use client";
 
+import { SearchResult } from "@/app/hooks/useSIV";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Step5SummaryProps {
   formData: {
-    selectedResult: { id: string; name: string } | null;
+    selectedResult: SearchResult | null;
     step2Answers: Record<string, string>;
     step3Answers: Record<string, string>;
   };

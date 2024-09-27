@@ -1,52 +1,83 @@
 "use client";
 
+import useSIV, { SearchResult } from "@/app/hooks/useSIV";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import SearchResultCard from "./SearchResultCard";
 
-interface Step2QuestionsProps {
-  onUpdateAnswers: (answers: Record<string, string>) => void;
+interface Step2SearchProps {
+  onSelectResult: (result: SearchResult | null) => void;
 }
 
-export function Step2Questions({ onUpdateAnswers }: Step2QuestionsProps) {
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+export default function Step2Questions({ onSelectResult }: Step2SearchProps) {
+  const { chercherImmatriculation } = useSIV();
+  const [licensePlate, setLicensePlate] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [, setSelectedResult] = useState<SearchResult | null>(null);
 
-  const handleInputChange = (question: string, value: string) => {
-    const newAnswers = { ...answers, [question]: value };
-    setAnswers(newAnswers);
-    onUpdateAnswers(newAnswers);
+  // useEffect(() => {
+  //   onSelectResult(selectedResult);
+  // }, [selectedResult, onSelectResult]);
+
+  const formatLicensePlate = (value: string) => {
+    const cleaned = value.replace(/[^A-Za-z0-9]/g, "").toUpperCase();
+    const match = cleaned.match(
+      /^([A-Z0-9]{1,2})([A-Z0-9]{1,3})?([A-Z0-9]{1,2})?$/
+    );
+
+    if (match) {
+      const [, first, second, third] = match;
+      if (third) return `${first}-${second}-${third}`;
+      if (second) return `${first}-${second}`;
+      return first;
+    }
+
+    return cleaned;
+  };
+
+  const handleLicensePlateChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatLicensePlate(e.target.value);
+    setLicensePlate(formatted);
+  };
+
+  const handleSearch = async () => {
+    // This is a mock API call. Replace this with your actual API call.
+    const mockResults: SearchResult[] = (await chercherImmatriculation(
+      licensePlate
+    )) as unknown as SearchResult[];
+    setSearchResults(mockResults);
+  };
+
+  const handleSelectResult = (result: SearchResult) => {
+    setSelectedResult(result);
+    onSelectResult(result);
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-bold">Vehicle Details</h2>
-      <div className="space-y-2">
-        <Label htmlFor="make">Make</Label>
-        <Input
-          id="make"
-          placeholder="Enter vehicle make"
-          value={answers["make"] || ""}
-          onChange={(e) => handleInputChange("make", e.target.value)}
+    <div className="space-y-4 flex flex-col justify-center text-center">
+      <h2 className="text-xl font-bold text-center">N° d'immatriculation</h2>
+      <Input
+        id="license-plate"
+        type="text"
+        placeholder="XX-XXX-XX"
+        value={licensePlate}
+        onChange={handleLicensePlateChange}
+        maxLength={9}
+        className="uppercase text-center text-xl p-4 h-14"
+      />
+      <Button onClick={handleSearch} disabled={licensePlate.length < 8}>
+        Chercher mon véhicule
+      </Button>{" "}
+      {searchResults.length > 0 && (
+        <SearchResultCard
+          onSelect={(result: SearchResult) =>
+            handleSelectResult(searchResults[0])
+          }
+          result={searchResults[0]}
         />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="model">Model</Label>
-        <Input
-          id="model"
-          placeholder="Enter vehicle model"
-          value={answers["model"] || ""}
-          onChange={(e) => handleInputChange("model", e.target.value)}
-        />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="year">Year</Label>
-        <Input
-          id="year"
-          placeholder="Enter vehicle year"
-          value={answers["year"] || ""}
-          onChange={(e) => handleInputChange("year", e.target.value)}
-        />
-      </div>
+      )}
     </div>
   );
 }
