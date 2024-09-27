@@ -130,7 +130,7 @@ export function Step15Questions({ answers }: Step15QuestionsProps) {
               <InfoValue>{exampleData.adresse_vehicule}</InfoValue>
             </InfoContainer>
             <InfoContainer>
-              <InfoLabel>Date d'achat</InfoLabel>
+              <InfoLabel>Date d&apos;achat</InfoLabel>
               <InfoValue>
                 {exampleData.mois} {exampleData.annee}
               </InfoValue>
@@ -194,7 +194,14 @@ export function Step15Questions({ answers }: Step15QuestionsProps) {
   );
 }
 
-const InfoContainer = ({ children, ...props }: { children: any }) => (
+interface InfoContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+}
+
+const InfoContainer: React.FC<InfoContainerProps> = ({
+  children,
+  ...props
+}) => (
   <div
     className="flex flex-wrap flex-col md:flex-row justify-between"
     {...props}
@@ -203,19 +210,25 @@ const InfoContainer = ({ children, ...props }: { children: any }) => (
   </div>
 );
 
-const InfoLabel = ({ children, ...props }: { children: any }) => (
+interface InfoLabelProps extends React.HTMLAttributes<HTMLSpanElement> {
+  children: React.ReactNode;
+}
+
+const InfoLabel: React.FC<InfoLabelProps> = ({ children, ...props }) => (
   <span className="font-medium text-gray-500" {...props}>
     {children}
   </span>
 );
 
-const InfoValue = ({
+interface InfoValueProps extends React.HTMLAttributes<HTMLSpanElement> {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const InfoValue: React.FC<InfoValueProps> = ({
   children,
   className,
   ...props
-}: {
-  children: any;
-  className?: string;
 }) => (
   <span className={className} {...props}>
     {children}
