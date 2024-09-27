@@ -48,10 +48,10 @@ export function MultiStepFormComponent() {
     step7Answers: {},
     step8Answers: {},
     step9Answers: {},
-    step10Answers: {
+    step10Answers: {},
+    step11Answers: {
       dateEffetContrat: new Date().toISOString().split("T")[0],
     },
-    step11Answers: {},
     step12Answers: {},
     step13Answers: {},
     step14Answers: {},
