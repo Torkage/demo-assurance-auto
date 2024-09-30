@@ -69,6 +69,11 @@ export default function Step2Questions({ onSelectResult }: Step2SearchProps) {
         onChange={handleLicensePlateChange}
         maxLength={9}
         className="uppercase text-center text-xl p-4 h-14"
+        style={{
+          background: "url('/images/plaque_vierge.png') no-repeat",
+          backgroundSize: "cover",
+          width: 260,
+        }}
       />
       <Button
         onClick={handleSearch}

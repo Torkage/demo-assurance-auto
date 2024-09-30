@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import { Switch } from "./ui/switch";
+import { cn } from "@/lib/utils";
 
 interface InsuranceOption {
   title: string;
@@ -111,18 +112,31 @@ export function Step13Questions({ onUpdateAnswers }: Step13QuestionsProps) {
             onValueChange={(value) => handleInputChange("mileage", value)}
             className="flex flex-col sm:flex-row gap-2"
           >
-            <div className="flex items-center space-x-2 bg-muted rounded-md p-2 flex-1">
-              <RadioGroupItem value="5000" id="r1" />
-              <Label htmlFor="r1">Moins de 5000 km/an</Label>
-            </div>
-            <div className="flex items-center space-x-2 bg-muted rounded-md p-2 flex-1">
-              <RadioGroupItem value="8000" id="r2" />
-              <Label htmlFor="r2">Moins de 8000 km/an</Label>
-            </div>
-            <div className="flex items-center space-x-2 bg-muted rounded-md p-2 flex-1">
-              <RadioGroupItem value="8000+" id="r3" />
-              <Label htmlFor="r3">Plus de 8000 km/an</Label>
-            </div>
+            {["5000", "8000", "8000+"].map((value, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "flex items-center space-x-2  rounded-md p-2 flex-1",
+                  answers["mileage"] === value && "bg-black text-white"
+                )}
+              >
+                <RadioGroupItem
+                  value={value}
+                  id={`r${index + 1}`}
+                  className={cn(
+                    "border border-gray-300 rounded-full cursor-pointer",
+                    answers["mileage"] === value && "bg-white"
+                  )}
+                />
+                <Label className="cursor-pointer" htmlFor={`r${index + 1}`}>
+                  {value === "5000"
+                    ? "Moins de 5000 km/an"
+                    : value === "8000"
+                    ? "Moins de 8000 km/an"
+                    : "Plus de 8000 km/an"}
+                </Label>
+              </div>
+            ))}
           </RadioGroup>
         </CardContent>
       </Card>

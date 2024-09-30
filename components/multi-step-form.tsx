@@ -19,6 +19,7 @@ import { Step8Questions } from "./step-8-questions";
 import { Step9Questions } from "./step-9-questions";
 import { Step16Questions } from "./step-16-questions";
 import StepPaymentSuccess from "./step-final";
+import FormProgressComponent from "./form-progress";
 
 export function MultiStepFormComponent() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -38,6 +39,9 @@ export function MultiStepFormComponent() {
     step12Answers: Record<string, string>;
     step13Answers: Record<string, string>;
     step14Answers: Record<string, string>;
+    step15Answers: Record<string, string>;
+    step16Answers: Record<string, string>;
+    step17Answers: Record<string, string>;
   }>({
     step1Answers: {},
     step2Answers: {},
@@ -55,9 +59,12 @@ export function MultiStepFormComponent() {
     step12Answers: {},
     step13Answers: {},
     step14Answers: {},
+    step15Answers: {},
+    step16Answers: {},
+    step17Answers: {},
   });
 
-  const totalSteps = 20;
+  const totalSteps = Object.keys(formData).length;
 
   useEffect(() => {
     updateCompletedSteps();
@@ -90,11 +97,17 @@ export function MultiStepFormComponent() {
   }, {});
 
   console.log("formData", formData);
+  // const automaticNextSteps: number[] = [];
+  const automaticNextSteps: number[] = [1, 2, 3, 5, 7, 8, 10, 12];
 
   return (
     <div className="flex flex-col h-screen">
-      <header className="bg-white shadow p-4">
-        <h1 className="text-xl font-bold">Assurance Auto</h1>
+      <header className="bg-white  p-4">
+        <h1 className="text-xl font-bold text-center pb-2">Assurance Auto</h1>
+        <FormProgressComponent
+          currentStep={currentStep}
+          totalSteps={totalSteps}
+        />
       </header>
       <main
         className="flex-grow overflow-auto flex justify-center items-start mt-8 px-4 pt-4"
@@ -102,12 +115,6 @@ export function MultiStepFormComponent() {
           paddingBottom: 100,
         }}
       >
-        {/* <FormProgress
-              currentStep={currentStep}
-              totalSteps={totalSteps}
-              completedSteps={completedSteps}
-              onStepClick={handleStepClick}
-            /> */}
         {/* Numéro immat */}
         {currentStep === 1 && (
           <Step1Questions
@@ -227,9 +234,11 @@ export function MultiStepFormComponent() {
         )}
         {currentStep === 16 && (
           <Step16Questions
+            formData={flatFormData}
             onUpdateAnswers={(answers) => {
               updateFormData({ [`step${currentStep}Answers`]: answers });
             }}
+            onPay={() => handleNext()}
           />
         )}
         {currentStep === 17 && <StepPaymentSuccess />}
@@ -244,7 +253,11 @@ export function MultiStepFormComponent() {
           >
             Retour
           </Button>
-          <Button onClick={handleNext}>Continuer</Button>
+          {automaticNextSteps.includes(currentStep) ? (
+            <div></div>
+          ) : (
+            <Button onClick={handleNext}>Continuer</Button>
+          )}
         </footer>
       )}
     </div>

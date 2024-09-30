@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton"; // Importing Skeleton component
 
 interface PriceOption {
   title: string;
@@ -20,7 +21,7 @@ interface PriceOption {
   recommended?: boolean;
 }
 
-const priceOptions: PriceOption[] = [
+export const priceOptions: PriceOption[] = [
   {
     title: "Tiers",
     price: 46.37,
@@ -79,6 +80,14 @@ interface Step12QuestionsProps {
 export function Step12Questions({ onUpdateAnswers }: Step12QuestionsProps) {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+  const [isLoadingPrice, setIsLoadingPrice] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsLoadingPrice(true);
+    setTimeout(() => {
+      setIsLoadingPrice(false);
+    }, 3000);
+  }, []);
 
   const handleSelectPlan = (plan: PriceOption) => {
     const newAnswers = { ...answers, plan: plan.title };
@@ -111,14 +120,22 @@ export function Step12Questions({ onUpdateAnswers }: Step12QuestionsProps) {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="text-3xl font-bold">
-                {option.price.toFixed(2)} €{" "}
-                <span className="text-lg font-normal">/mois</span>
-              </div>
-              <div className="text-sm">
-                Payez annuellement, économisez {option.annualSavings.toFixed(2)}{" "}
-                €
-              </div>
+              {isLoadingPrice ? (
+                <Skeleton className="h-8 w-3/4" />
+              ) : (
+                <div className="text-3xl font-bold">
+                  {option.price.toFixed(2)} €{" "}
+                  <span className="text-lg font-normal">/mois</span>
+                </div>
+              )}
+              {isLoadingPrice ? (
+                <Skeleton className="h-4 w-1/2" />
+              ) : (
+                <div className="text-sm">
+                  Payez annuellement, économisez{" "}
+                  {option.annualSavings.toFixed(2)} €
+                </div>
+              )}
               <ul className="space-y-2">
                 {option.features.map((feature) => (
                   <li

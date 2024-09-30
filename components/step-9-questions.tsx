@@ -44,7 +44,7 @@ export function Step9Questions({ onUpdateAnswers }: Step9QuestionsProps) {
 
       setTimeout(() => {
         setLoading(false);
-      }, 2000); // Simulate a 2-second loading period
+      }, 4000); // Simulate a 2-second loading period
     }
   }, [faceImagePreview, backImagePreview]);
 

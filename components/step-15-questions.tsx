@@ -12,6 +12,7 @@ import { UserRound } from "lucide-react";
 import { usageVehiculeOptions } from "./step-5-questions";
 import { garageVehiculeOptions } from "./step-7-questions";
 import { Avatar, AvatarImage } from "./ui/avatar";
+import { priceOptions } from "./step-12-questions";
 
 // const exampleData = {
 //   color: "immatriculation",
@@ -82,6 +83,9 @@ export function Step15Questions({ answers }: Step15QuestionsProps) {
       <h2 className="text-xl font-bold text-center">Mon contrat</h2>
       <div className="space-y-2 max-w-lg mx-auto">
         <h2 className="text-lg font-bold">{exampleData.plan}</h2>
+        <h2 className="text-lg font-bold">
+          {priceOptions.find((p) => p.title === exampleData.plan)?.price} €/mois
+        </h2>
         <p className="text-md">
           Prendra effet le{" "}
           <span className="font-bold">
